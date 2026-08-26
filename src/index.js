@@ -83,6 +83,8 @@ async function startAccount(token, index) {
   });
 
   client.config = config;
+  client.allClients = clients;
+  client.accountIndex = index;
 
   client.on('ready', async () => {
     console.log(`==========================================`);
