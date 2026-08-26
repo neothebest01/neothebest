@@ -23,12 +23,6 @@ if (config.rpc) {
   config.rpc.applicationId = process.env.APPLICATION_ID || config.rpc.applicationId || '1541749570071957565';
 }
 
-// Lightweight HTTP server for Render Free Web Service health checks
-const http = require('http');
-const port = process.env.PORT || 3000;
-http.createServer((req, res) => res.end('Neo Selfbot is Running!')).listen(port, () => {
-  console.log(`🌐 HTTP Health Check Server running on port ${port}`);
-});
 
 const client = new Client({
   checkUpdate: false
@@ -158,14 +152,11 @@ process.on('unhandledRejection', (reason) => {
 });
 
 if (!config.token || config.token === 'YOUR_DISCORD_TOKEN_HERE') {
-  console.error('❌ [LỖI] Chưa tìm thấy DISCORD_TOKEN trong Environment Variables trên Render!');
+  console.error('❌ [LỖI] Chưa tìm thấy DISCORD_TOKEN trong file .env!');
+  process.exit(1);
 } else {
   const cleanToken = String(config.token).trim().replace(/^["']|["']$/g, '');
-  console.log(`🔑 Đang đăng nhập vào Discord... (Độ dài Token: ${cleanToken.length} ký tự)`);
-  
-  client.login(cleanToken).then(() => {
-    console.log('✅ Đã xác thực thành công với Discord!');
-  }).catch(err => {
+  client.login(cleanToken).catch(err => {
     console.error('❌ [LỖI ĐĂNG NHẬP DISCORD]:', err.message);
   });
 }
