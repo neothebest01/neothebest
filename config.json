@@ -9,7 +9,7 @@
         "state": "Đi khắp thiên hà anh vẫn sẽ bước đi để kiếm em",
         "url": "https://www.twitch.tv/discord",
         "assets": {
-            "largeImage": "https://cdn.discordapp.com/attachments/1519549963221336078/1541750005277392896/Messenger_creation_30254AE8-A915-4C11-BE26-1C0BA3481AAF.jpg?ex=6a8eba15&is=6a8d6895&hm=0a921f9856f5937d7add0e1c278920298cdafb89c59b75feab5d3499c4440ae9&",
+            "largeImage": "https://cdn.discordapp.com/attachments/1519549963221336078/1541750005277392896/Messenger_creation_30254AE8-A915-4C11-BE26-1C0BA3481AAF.jpg?ex=6a900b95&is=6a8eba15&hm=f7494138999da05dfc31bc793279d52b26cf7dfece559e889d0ba268df506ba3&",
             "largeText": "Neo The Best",
             "smallImage": "",
             "smallText": "Online"
@@ -32,5 +32,16 @@
         "enabled": true,
         "minDelayMs": 1500,
         "maxDelayMs": 3500
-    }
+    },
+    "repeatTasks": [
+        {
+            "id": "task_1787743603590_490",
+            "intervalMs": 300000,
+            "intervalText": "5m",
+            "channelId": "1525312456665075754",
+            "content": "opray",
+            "lastSent": 1787743918667,
+            "enabled": true
+        }
+    ]
 }
