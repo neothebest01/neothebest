@@ -5,20 +5,22 @@ module.exports = {
     const allClients = client.allClients || [client];
     const targetArg = args[0] ? args[0].toLowerCase() : 'list';
 
-    // 1. View current active target
+    // 1. View current active target & all bots list
     if (targetArg === 'list' || targetArg === 'status') {
       const currentTargetIdx = client.activeTargetIndex || 0;
-      const targetBot = allClients[currentTargetIdx] || client;
-      const isOwner = currentTargetIdx === 0 ? '👑 [OWNER]' : `🤖 [SUB-BOT #${currentTargetIdx + 1}]`;
+      let replyText = `🤖 **DANH SÁCH BOTS HỆ THỐNG MULTI-SELFBOT (${allClients.length}):**\n\n`;
 
-      return message.sendAutoDelete(
-        `🎯 **MỤC TIÊU ĐIỀU KHIỂN HIỆN TẠI:**\n` +
-        `• Đang điều khiển: ${isOwner} **${targetBot.user.tag}**\n\n` +
-        `👉 **Cú pháp chuyển đổi:**\n` +
-        `• \`$bot 2\` : Chuyển điều khiển sang Bot số 2\n` +
-        `• \`$bot 3\` : Chuyển điều khiển sang Bot số 3\n` +
-        `• \`$bot owner\` (hoặc \`$bot 1\`) : Quay về điều khiển Owner`
-      );
+      allClients.forEach((bot, idx) => {
+        const isOwner = idx === 0 ? '👑 [OWNER]' : '🤖 [SUB-BOT]';
+        const isTarget = idx === currentTargetIdx ? ' 🎯 *(Đang chọn)*' : '';
+        replyText += `**[${idx + 1}]** ${isOwner} **${bot.user.tag}**${isTarget}\n`;
+      });
+
+      replyText += `\n👉 **Cú pháp chuyển quyền:**\n`;
+      replyText += `• \`$bot 2\` : Chuyển điều khiển sang Bot số 2\n`;
+      replyText += `• \`$bot owner\` (hoặc \`$bot 1\`) : Trả về quyền Owner`;
+
+      return message.sendAutoDelete(replyText);
     }
 
     // 2. Switch back to Owner
