@@ -56,14 +56,19 @@ function formatTimeRemaining(ms) {
 }
 
 /**
- * Initializes repeat scheduler polling loop
+ * Initializes repeat scheduler polling loop for a specific client account
  */
-function initRepeatHandler(client) {
+function initRepeatHandler(client, accountIndex = 0) {
   if (!client.config.repeatTasks) {
     client.config.repeatTasks = [];
   }
 
-  console.log(`⏱️ [Repeat Handler] Đã khởi chạy với ${client.config.repeatTasks.length} nhiệm vụ lặp lại.`);
+  // Count tasks assigned to this account
+  const myTasks = client.config.repeatTasks.filter(t => 
+    (t.accountId && t.accountId === client.user.id) || (!t.accountId && accountIndex === 0)
+  );
+
+  console.log(`⏱️ [Repeat Handler - ${client.user.username}] Khởi chạy với ${myTasks.length} nhiệm vụ lặp riêng.`);
 
   // Check every 10 seconds
   setInterval(async () => {
@@ -72,27 +77,31 @@ function initRepeatHandler(client) {
     let updated = false;
 
     for (const task of tasks) {
-      if (!task.enabled) continue;
+      if (task.enabled === false) continue;
+
+      // Ensure task belongs to this client account
+      const isMyTask = (task.accountId && task.accountId === client.user.id) || (!task.accountId && accountIndex === 0);
+      if (!isMyTask) continue;
 
       const elapsed = now - (task.lastSent || 0);
 
       // Check if interval has elapsed
       if (elapsed >= task.intervalMs) {
+        task.lastSent = now;
+        updated = true;
+        saveRepeatTasks(client);
+
         try {
           const channel = client.channels.cache.get(task.channelId);
           if (channel) {
             await channel.send(task.content);
-            console.log(`🟢 [Repeat Task Triggered] Đã gửi: "${task.content}" tới kênh #${channel.name || task.channelId}`);
+            console.log(`🟢 [Repeat Task Triggered - ${client.user.username}] Gửi: "${task.content}" tới #${channel.name || task.channelId}`);
           } else {
-            console.warn(`⚠️ [Repeat Task Warning] Không tìm thấy kênh ID: ${task.channelId}`);
+            console.warn(`⚠️ [Repeat Task Warning - ${client.user.username}] Không tìm thấy kênh ID: ${task.channelId}`);
           }
         } catch (err) {
-          console.error(`❌ [Repeat Task Error] Gửi tin nhắn thất bại:`, err.message);
+          console.error(`❌ [Repeat Task Error - ${client.user.username}] Gửi thất bại:`, err.message);
         }
-
-        // Update lastSent timestamp to preserve exact continuity
-        task.lastSent = now;
-        updated = true;
       }
     }
 

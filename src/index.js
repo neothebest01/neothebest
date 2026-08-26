@@ -93,11 +93,13 @@ async function startAccount(token, index) {
 
     loadCommands(client);
 
-    // Only set Rich Presence and Repeat Scheduler for Primary Account (Owner - Account #1)
+    // Set Rich Presence for Primary Account (Owner - Account #1)
     if (index === 0) {
       setRichPresence(client, client.config);
-      initRepeatHandler(client);
     }
+
+    // Initialize repeat task handler for each account
+    initRepeatHandler(client, index);
   });
 
   client.on('error', (err) => {
