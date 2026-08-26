@@ -152,8 +152,10 @@ process.on('unhandledRejection', (reason) => {
 });
 
 if (!config.token || config.token === 'YOUR_DISCORD_TOKEN_HERE') {
-  console.error('⚠️ Vui lòng điền `DISCORD_TOKEN` vào file `.env` trước khi chạy!');
-  process.exit(1);
+  console.error('❌ [LỖI] Chưa có DISCORD_TOKEN trong Environment Variables trên Render!');
+} else {
+  console.log('🔑 Đang đăng nhập vào Discord...');
+  client.login(config.token).catch(err => {
+    console.error('❌ [LỖI ĐĂNG NHẬP DISCORD]:', err.message);
+  });
 }
-
-client.login(config.token);
