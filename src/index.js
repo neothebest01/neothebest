@@ -21,14 +21,13 @@ try {
 // Collect all tokens from environment variables & config.json
 const rawTokens = [];
 
-// 1. From DISCORD_TOKENS (comma separated)
+// 1. From DISCORD_TOKENS or DISCORD_TOKEN (auto-split by comma)
 if (process.env.DISCORD_TOKENS) {
   process.env.DISCORD_TOKENS.split(',').forEach(t => rawTokens.push(t.trim()));
 }
 
-// 2. From DISCORD_TOKEN
 if (process.env.DISCORD_TOKEN) {
-  rawTokens.push(process.env.DISCORD_TOKEN.trim());
+  process.env.DISCORD_TOKEN.split(',').forEach(t => rawTokens.push(t.trim()));
 }
 
 // 3. From DISCORD_TOKEN_1, DISCORD_TOKEN_2, etc.
