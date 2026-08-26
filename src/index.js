@@ -23,6 +23,13 @@ if (config.rpc) {
   config.rpc.applicationId = process.env.APPLICATION_ID || config.rpc.applicationId || '1541749570071957565';
 }
 
+// Lightweight HTTP server for Render Free Web Service health checks
+const http = require('http');
+const port = process.env.PORT || 3000;
+http.createServer((req, res) => res.end('Neo Selfbot is Running!')).listen(port, () => {
+  console.log(`🌐 HTTP Health Check Server running on port ${port}`);
+});
+
 const client = new Client({
   checkUpdate: false
 });
