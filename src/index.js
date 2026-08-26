@@ -129,7 +129,16 @@ async function startAccount(token, index) {
             return sentMsg;
           };
 
-          await command.execute(message, args, client);
+          // Determine target client (If Owner has switched target via $bot)
+          let targetClient = client;
+          const ownerClient = client.allClients ? client.allClients[0] : client;
+          const activeTargetIdx = ownerClient.activeTargetIndex || 0;
+
+          if (commandName !== 'bot' && client.accountIndex === 0 && activeTargetIdx > 0) {
+            targetClient = client.allClients[activeTargetIdx] || client;
+          }
+
+          await command.execute(message, args, targetClient);
         } catch (err) {
           console.error(`[Error Command $${commandName}]`, err);
         }

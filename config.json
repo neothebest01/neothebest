@@ -40,7 +40,7 @@
             "intervalText": "5m",
             "channelId": "1525312456665075754",
             "content": "opray",
-            "lastSent": 1787745146510,
+            "lastSent": 1787745647371,
             "enabled": true
         },
         {
@@ -49,7 +49,7 @@
             "intervalText": "5m",
             "channelId": "1525312456665075754",
             "content": "opray",
-            "lastSent": 1787745365322,
+            "lastSent": 1787745667388,
             "enabled": true
         }
     ]
