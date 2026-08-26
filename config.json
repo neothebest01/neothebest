@@ -1,0 +1,36 @@
+{
+    "prefix": "$",
+    "rpc": {
+        "enabled": true,
+        "applicationId": "1541749570071957565",
+        "type": "PLAYING",
+        "name": "I love you",
+        "details": "Anh Yêu Phương Vyy",
+        "state": "Đi khắp thiên hà anh vẫn sẽ bước đi để kiếm em",
+        "url": "https://www.twitch.tv/discord",
+        "assets": {
+            "largeImage": "https://cdn.discordapp.com/attachments/1519549963221336078/1541750005277392896/Messenger_creation_30254AE8-A915-4C11-BE26-1C0BA3481AAF.jpg?ex=6a8eba15&is=6a8d6895&hm=0a921f9856f5937d7add0e1c278920298cdafb89c59b75feab5d3499c4440ae9&",
+            "largeText": "Neo The Best",
+            "smallImage": "",
+            "smallText": "Online"
+        },
+        "showTimestamp": true,
+        "startTime": 1787653939638
+    },
+    "afk": {
+        "enabled": false,
+        "reason": "đang AFK, từ từ đi"
+    },
+    "autoResponder": {
+        "enabled": true,
+        "triggers": {
+            "neo": "Neo hiện đang không có ở đây!",
+            "ping": "Neo hiện đang không có ở đây!"
+        }
+    },
+    "typingEffect": {
+        "enabled": true,
+        "minDelayMs": 1500,
+        "maxDelayMs": 3500
+    }
+}
