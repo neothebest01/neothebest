@@ -49,7 +49,13 @@ client.on('ready', async () => {
   setRichPresence(client, client.config);
 });
 
-// Helper function to send reply with typing effect and realistic delay
+client.on('error', (err) => {
+  console.error('[Discord Error Event]', err);
+});
+
+client.on('warn', (warning) => {
+  console.warn('[Discord Warning Event]', warning);
+});
 async function sendHumanizedReply(message, replyText) {
   const typingConfig = client.config.typingEffect || { enabled: true, minDelayMs: 1500, maxDelayMs: 3500 };
 
